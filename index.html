@@ -400,17 +400,38 @@ body.dark-mode .hero-text p {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
-.elemento {
-  background-color: rgba(255, 255, 255, 0.8);
-  position: relative;
-  z-index: 1;
-}
 
-@supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
-  .elemento {
-    background-color: rgba(255, 255, 255, 0.5);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  nav .nav-list {
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.6); /* uguale al desktop */
+    backdrop-filter: blur(12px); /* aggiunto */
+    border-radius: 20px; /* uguale al desktop */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* uguale al desktop */
+    padding: 1rem;
+    width: 200px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+  }
+
+  nav .nav-list.active {
+    max-height: 500px;
+    opacity: 1;
+  }
+
+  body.dark-mode nav .nav-list {
+    background-color: rgba(30, 30, 30, 0.4); /* uguale alla dark-mode desktop */
+    backdrop-filter: blur(12px); /* aggiunto */
+    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.05); /* uguale */
   }
 }
 
