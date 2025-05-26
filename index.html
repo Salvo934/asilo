@@ -472,6 +472,37 @@ html, body {
 }
 
 
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  nav .nav-list {
+    flex-direction: column;
+    position: fixed; /* da absolute → fixed */
+    top: 60px; /* subito sotto il header */
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    padding: 1rem;
+    border-radius: 20px;
+    width: 200px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    z-index: 1500; /* sopra header e glow */
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+  }
+
+  nav .nav-list.active {
+    max-height: 500px;
+    opacity: 1;
+  }
+}
+
+
 
     </style>
   </head>
