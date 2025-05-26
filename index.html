@@ -113,6 +113,19 @@ header {
   animation: glowWave 10s ease-in-out infinite;
 }
 
+@media (max-width: 600px) {
+  header {
+    padding: 0.25rem 1rem;     /* meno padding */
+  }
+
+  .header-glow-fixed {
+    top: 40px;                 /* abbassato per header più basso */
+    height: 100px;             /* meno invasivo su mobile */
+    filter: blur(60px);        /* meno blur per performance */
+    opacity: 0.7;              /* leggermente meno visibile */
+  }
+}
+
 
 
       .header-container {
