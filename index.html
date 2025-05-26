@@ -155,31 +155,40 @@
       }
 
       @media (max-width: 768px) {
-        .menu-toggle {
-          display: block;
-        }
+  .menu-toggle {
+    display: block;
+  }
 
-        nav .nav-list {
-          flex-direction: column;
-          position: absolute;
-          top: 100%;
-          right: 0;
-          background: rgba(255, 255, 255, 0.8);
-          box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-          padding: 1rem;
-          border-radius: 10px;
-          width: 200px;
-          max-height: 0;
-          opacity: 0;
-          overflow: hidden;
-          transition: max-height 0.5s ease, opacity 0.5s ease;
-        }
+  nav .nav-list {
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: rgba(255, 255, 255, 0.6); /* trasparenza simile al desktop */
+    backdrop-filter: blur(12px); /* effetto sfocatura */
+    -webkit-backdrop-filter: blur(12px); /* per Safari iOS e compatibilità */
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* più soft come su desktop */
+    padding: 1rem;
+    border-radius: 20px; /* match desktop radius */
+    width: 200px;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+  }
 
-        nav .nav-list.active {
-          max-height: 500px;
-          opacity: 1;
-        }
-      }
+  nav .nav-list.active {
+    max-height: 500px;
+    opacity: 1;
+  }
+
+  body.dark-mode nav .nav-list {
+    background-color: rgba(30, 30, 30, 0.4); /* dark version */
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.05);
+  }
+}
 
       main {
         max-width: 1100px;
@@ -398,43 +407,6 @@ body.dark-mode .hero-text p {
   max-width: 100%;
   border-radius: 20px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-}
-
-
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
-  nav .nav-list {
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: rgba(255, 255, 255, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    border-radius: 20px;
-    padding: 1rem;
-    width: 200px;
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease, opacity 0.5s ease;
-  }
-
-  nav .nav-list.active {
-    max-height: 500px;
-    opacity: 1;
-  }
-
-  body.dark-mode nav .nav-list {
-    background-color: rgba(30, 30, 30, 0.4);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.05);
-  }
 }
 
 
