@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Asilo Santa Monica</title>
+
+    <!-- Fonts & Icons -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+
+    <style>
+      :root {
+        --accent: #ff8ba7;
+        --accent-dark: #f67280;
+        --text: #333;
+        --background: #ffffffee;
+        --background-dark: #1e1e1e;
+        --text-dark: #eaeaea;
+        --font: "Baloo 2", cursive;
+      }
+
+      body {
+        font-family: var(--font);
+        color: var(--text);
+        background: linear-gradient(
+          -45deg,
+          #ffdee9cc,
+          #b5ead7cc,
+          #c7ceea99,
+          #fcd5cecc
+        );
+        background-size: 400% 400%;
+        animation: gradientBG 15s ease infinite;
+        margin: 0;
+        overflow-x: hidden;
+        transition: background 0.5s, color 0.5s;
+      }
+
+      body.dark-mode {
+        background: #121212;
+        color: var(--text-dark);
+      }
+
+      body.dark-mode section,
+      body.dark-mode header,
+      body.dark-mode footer {
+        background-color: #1e1e1eaa;
+        color: var(--text-dark);
+        backdrop-filter: blur(12px);
+      }
+
+      @keyframes gradientBG {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      #tsparticles {
+        position: fixed;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+      }
+
+      header {
+        background-color: var(--background);
+        backdrop-filter: blur(10px);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        transition: background-color 0.5s;
+      }
+
+      header::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(270deg, #ff8ba7, #fcd5ce, #b5ead7, #c7ceea);
+        background-size: 600% 600%;
+        animation: glowingLine 6s ease infinite;
+      }
+
+      @keyframes glowingLine {
+        0%,
+        100% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+      }
+
+      .header-container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo-title {
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .logo {
+        width: 100px;
+        height: auto;
+        margin-right: 10px;
+      }
+
+      nav .nav-list {
+        display: flex;
+        list-style: none;
+        gap: 20px;
+      }
+
+      nav .nav-list a {
+        text-decoration: none;
+        font-weight: bold;
+        color: inherit;
+        position: relative;
+      }
+
+      nav .nav-list a::after {
+        content: "";
+        position: absolute;
+        left: 50%;
+        bottom: -5px;
+        transform: translateX(-50%) scaleX(0);
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(90deg, #ff8ba7, #fcd5ce, #b5ead7);
+        border-radius: 2px;
+        transition: transform 0.4s ease;
+      }
+
+      nav .nav-list a:hover::after,
+      nav .nav-list a.active::after {
+        transform: translateX(-50%) scaleX(1);
+      }
+
+      main {
+        max-width: 1100px;
+        margin: auto;
+        padding: 2rem;
+      }
+
+      section {
+        background: var(--background);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        backdrop-filter: blur(10px);
+        transition: background-color 0.5s;
+      }
+
+      .hero-section {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2rem;
+        padding: 3rem 1.5rem;
+        background: linear-gradient(to right, #fcd5ce, #ffdee9);
+        border-radius: 1.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .hero-text {
+       
+        flex: 1 1 400px;
+        text-align: left;
+      }
+
+      .hero-text h2 {
+        font-size: 2.75rem;
+        margin-bottom: 1rem;
+        /*color: var(--accent-dark);*/
+        color: wheat;
+        line-height: 1.2;
+      }
+
+      .hero-text p {
+        font-size: 1.25rem;
+        margin-bottom: 1.5rem;
+        /*color: var(--text);*/
+        color: white;
+        max-width: 600px;
+      }
+
+     
+
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+      }
+
+      .gallery img {
+        width: 100%;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      form input,
+      form textarea {
+        padding: 0.75rem;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        font-family: var(--font);
+        background: #fff;
+      }
+
+      form button {
+        padding: 0.75rem;
+        border: none;
+        border-radius: 10px;
+        background: var(--accent);
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+        font-size: 1.1rem;
+      }
+
+      th,
+      td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      thead {
+        background: rgba(255, 139, 167, 0.2);
+      }
+
+      tbody tr:hover {
+        background-color: rgba(255, 139, 167, 0.1);
+      }
+
+      body.dark-mode thead {
+        background: rgba(255, 139, 167, 0.1);
+      }
+
+      body.dark-mode tbody tr:hover {
+        background-color: rgba(255, 139, 167, 0.05);
+      }
+
+      footer {
+        background: var(--background);
+        padding: 1.5rem;
+        text-align: center;
+        font-size: 0.9rem;
+        border-top: 1px solid #eee;
+      }
+
+      .social-icons a {
+       
+        margin: 0 0.5rem;
+        color: inherit;
+        font-size: 1.5rem;
+      }
+
+      .theme-toggle {
+        cursor: pointer;
+        font-size: 1.2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="tsparticles"></div>
+
+    <header>
+      <div class="header-container">
+        <a href="#" class="logo-title">
+          <img src="logo.png" alt="Logo" class="logo" />
+          <h1>Asilo Santa Monica</h1>
+        </a>
+        <nav>
+          <ul class="nav-list">
+            <li><a href="#chi-siamo">Chi Siamo</a></li>
+            <li><a href="#servizi">Servizi</a></li>
+            <li><a href="#galleria">Galleria</a></li>
+            <li><a href="#contatti">Contatti</a></li>
+            <li><a href="iscrizione.html">Iscriviti ora</a></li>
+            <li>
+              <span class="theme-toggle" id="themeToggle" title="Cambia tema"
+                ><i class="fas fa-adjust"></i
+              ></span>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <!-- CONTENUTO OMESSO PER BREVITÀ -->
+    <main>
+      <section class="hero">
+        <div class="hero-text">
+          <h2>Dove crescere è un’avventura</h2>
+          <p>
+            Scopri un mondo di giochi, sorrisi e apprendimento: il nostro asilo
+            è pensato per far sbocciare ogni piccolo talento in un ambiente
+            sereno e stimolante.
+          </p>
+        </div>
+      </section>
+
+      <section id="chi-siamo">
+        <h2>Chi Siamo</h2>
+        <p>
+          L’Asilo Santa Monica accoglie bambini dai 12 ai 36 mesi in un ambiente
+          sereno, sicuro e stimolante. Promuoviamo attività ludiche, laboratori
+          creativi, relazioni affettive positive e un forte dialogo con le
+          famiglie. Le nostre educatrici qualificate lavorano con passione per
+          ogni bambino.
+        </p>
+      </section>
+
+      <section id="servizi">
+        <h2>I Nostri Servizi</h2>
+        <ul>
+          <li>Attività educative personalizzate</li>
+          <li>Laboratori creativi, musicali e linguistici</li>
+          <li>Spazi verdi e area gioco attrezzata</li>
+          <li>Assistenza educativa qualificata</li>
+        </ul>
+      </section>
+
+      <section id="galleria">
+        <h2>Galleria Fotografica</h2>
+        <div class="gallery">
+          <img src="laboratorio.jpeg" alt="Laboratorio" />
+          <img src="gioco.jpeg" alt="Gioco" />
+          <img src="festa.jpeg" alt="Festa" />
+          <img src="compiti.jpeg" alt="Scuola" />
+        </div>
+      </section>
+
+      <section>
+        <h2>Orari di Apertura</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Giorno</th>
+              <th>Orario</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Lunedì - Venerdì</td>
+              <td>08:00 – 14:00</td>
+            </tr>
+            <tr>
+              <td>Sabato</td>
+              <td>08:00 – 12:00</td>
+            </tr>
+            <tr>
+              <td>Domenica</td>
+              <td>Chiuso</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <section id="contatti">
+        <h2>Contattaci</h2>
+        <form>
+          <input type="text" placeholder="Il tuo nome" required />
+          <input type="email" placeholder="La tua email" required />
+          <textarea rows="4" placeholder="Il tuo messaggio" required></textarea>
+          <button type="submit">Invia messaggio</button>
+        </form>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        &copy; 2025 Asilo Santa Monica | Tutti i diritti riservati | Realizzato
+        da Salvatore Bonavita
+      </p>
+      <nav class="social-icons">
+        <a
+          href="https://www.instagram.com/tuoprofilo"
+          target="_blank"
+          aria-label="Instagram"
+          ><i class="fab fa-instagram"></i
+        ></a>
+        <a
+          href="https://www.facebook.com/tuapagina"
+          target="_blank"
+          aria-label="Facebook"
+          ><i class="fab fa-facebook"></i
+        ></a>
+        <a
+          href="https://wa.me/393293086089"
+          target="_blank"
+          aria-label="WhatsApp"
+          ><i class="fab fa-whatsapp"></i
+        ></a>
+      </nav>
+    </footer>
+
+    <script>
+      tsParticles.load("tsparticles", {
+        background: { color: { value: "transparent" } },
+        fpsLimit: 60,
+        interactivity: {
+          events: { onHover: { enable: true, mode: "repulse" }, resize: true },
+          modes: { repulse: { distance: 100, duration: 0.4 } },
+        },
+        particles: {
+          color: { value: ["#ff8ba7", "#b5ead7", "#fcd5ce", "#c7ceea"] },
+          links: {
+            enable: true,
+            color: "#ccc",
+            distance: 120,
+            opacity: 0.3,
+            width: 1,
+          },
+          move: { enable: true, speed: 1, outModes: "bounce" },
+          number: { value: 50, density: { enable: true, area: 800 } },
+          opacity: { value: 0.4 },
+          shape: { type: "circle" },
+          size: { value: { min: 2, max: 6 } },
+        },
+        detectRetina: true,
+      });
+
+      // Dark mode toggle
+      const themeToggle = document.getElementById("themeToggle");
+      const body = document.body;
+
+      if (localStorage.getItem("theme") === "dark") {
+        body.classList.add("dark-mode");
+      }
+
+      themeToggle.addEventListener("click", () => {
+        body.classList.toggle("dark-mode");
+        localStorage.setItem(
+          "theme",
+          body.classList.contains("dark-mode") ? "dark" : "light"
+        );
+      });
+    </script>
+  </body>
+</html>
