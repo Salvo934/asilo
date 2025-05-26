@@ -411,10 +411,11 @@ body.dark-mode .hero-text p {
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: rgba(255, 255, 255, 0.6); /* uguale al desktop */
-    backdrop-filter: blur(12px); /* aggiunto */
-    border-radius: 20px; /* uguale al desktop */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* uguale al desktop */
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
     padding: 1rem;
     width: 200px;
     max-height: 0;
@@ -429,9 +430,10 @@ body.dark-mode .hero-text p {
   }
 
   body.dark-mode nav .nav-list {
-    background-color: rgba(30, 30, 30, 0.4); /* uguale alla dark-mode desktop */
-    backdrop-filter: blur(12px); /* aggiunto */
-    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.05); /* uguale */
+    background-color: rgba(30, 30, 30, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.05);
   }
 }
 
