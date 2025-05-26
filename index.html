@@ -61,38 +61,58 @@
         box-shadow: 0 8px 32px rgba(255, 255, 255, 0.05);
       }
 
-      header {
-        position: sticky;
-        top: 0;
-        z-index: 1000;
-        padding: 1rem 0;
-        position: relative; /* NECESSARIO */
-      }
-
-      header::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
+/* Header */
+/* Header fisso */
+header {
+  position: fixed;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 3px;
-  background: linear-gradient(90deg, #ff8ba7, #fcd5ce, #b5ead7, #c7ceea);
-  background-size: 400% 400%;
-  animation: headerLine 6s linear infinite;
-  border-radius: 2px;
+  z-index: 1000;
+  padding: 0.5rem 2rem; /* ⬅️ più sottile in altezza */
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
-@keyframes headerLine {
+
+/* Glow fisso sotto header */
+.header-glow-fixed {
+  position: fixed;
+  top: 70px; /* appena sotto l'altezza del header */
+  left: 0;
+  width: 100%;
+  height: 120px;
+  z-index: 999; /* sotto l'header, sopra il contenuto */
+  pointer-events: none;
+
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 255, 128, 0.5),
+    rgba(0, 212, 255, 0.3),
+    rgba(142, 125, 255, 0.2),
+    transparent 80%
+  );
+  background-size: 400% 400%;
+  filter: blur(80px);
+  opacity: 0.8;
+}
+
+@keyframes glowWave {
   0% {
     background-position: 0% 50%;
   }
   50% {
-    background-position: 100% 50%;
+    background-position: 100% 60%;
   }
   100% {
     background-position: 0% 50%;
   }
 }
+
+.header-glow-fixed {
+  animation: glowWave 10s ease-in-out infinite;
+}
+
 
 
       .header-container {
@@ -438,32 +458,6 @@ html, body {
   overflow-x: hidden;
 }
 
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
-  nav .nav-list {
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    padding: 1rem;
-    border-radius: 20px;
-    width: 200px;
-    max-height: 0;
-    opacity: 0.2;
-    overflow: hidden;
-    transition: max-height 0.5s ease, opacity 0.5s ease;
-  }
-
-  nav .nav-list.active {
-    max-height: 500px;
-    opacity: 1;
-  }
-}
-
-
 
 
     </style>
@@ -496,14 +490,21 @@ html, body {
           <!-- Pulsante tema nel nav -->
          
         </nav>
+        <div class="header-glow-line"></div>
+        <div class="header-glow-under"></div>
       </div>
+      <div class="aurora"></div>
     </header>
+    <div class="header-glow-fixed"></div>
+
+    <div style="height: 80px;"></div>
     
     <!-- Pulsante tema fisso in basso -->
     <button id="themeToggleFloat" title="Cambia tema" class="theme-toggle-btn">
       <i class="fas fa-moon"></i>
     </button>
     
+    <div class="aurora"></div>
 
     <main>
       <section class="hero">
@@ -690,6 +691,17 @@ html, body {
       // Attiva i due bottoni tema
       setupThemeToggle("themeToggleNav");
       setupThemeToggle("themeToggleFloat");
+    </script>
+    
+    <script>
+      window.addEventListener('DOMContentLoaded', () => {
+        const header = document.querySelector('header');
+        const main = document.querySelector('main');
+        if (header && main) {
+          const headerHeight = header.offsetHeight;
+          main.style.paddingTop = headerHeight + 40 + 'px'; // 40px extra per il glow
+        }
+      });
     </script>
     
 
