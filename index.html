@@ -400,6 +400,21 @@ body.dark-mode .hero-text p {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
 }
 
+.elemento {
+  background-color: rgba(255, 255, 255, 0.8);
+  position: relative;
+  z-index: 1;
+}
+
+@supports ((-webkit-backdrop-filter: blur(10px)) or (backdrop-filter: blur(10px))) {
+  .elemento {
+    background-color: rgba(255, 255, 255, 0.5);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+  }
+}
+
+
 
     </style>
   </head>
