@@ -164,7 +164,7 @@
     position: absolute;
     top: 100%;
     right: 0;
-    background: rgba(255, 255, 255, 0.6); /* trasparenza simile al desktop */
+    background: rgba(255, 255, 255, 0.8); /* trasparenza simile al desktop */
     backdrop-filter: blur(12px); /* effetto sfocatura */
     -webkit-backdrop-filter: blur(12px); /* per Safari iOS e compatibilità */
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* più soft come su desktop */
@@ -407,6 +407,28 @@ body.dark-mode .hero-text p {
   max-width: 100%;
   border-radius: 20px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+  header,
+  section,
+  footer,
+  nav .nav-list,
+  .hero {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
+
+  body.dark-mode header,
+  body.dark-mode section,
+  body.dark-mode footer,
+  body.dark-mode nav .nav-list,
+  body.dark-mode .hero {
+    background-color: rgba(30, 30, 30, 0.4) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+  }
 }
 
 
