@@ -438,6 +438,32 @@ html, body {
   overflow-x: hidden;
 }
 
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  nav .nav-list {
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    padding: 1rem;
+    border-radius: 20px;
+    width: 200px;
+    max-height: 0;
+    opacity: 0.2;
+    overflow: hidden;
+    transition: max-height 0.5s ease, opacity 0.5s ease;
+  }
+
+  nav .nav-list.active {
+    max-height: 500px;
+    opacity: 1;
+  }
+}
+
+
 
 
     </style>
