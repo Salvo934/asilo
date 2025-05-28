@@ -322,7 +322,7 @@
     <!-- Linea decorativa sopra -->
     <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent opacity-80"></div>
   
-    <p class="text-sm opacity-80">&copy; 2025 Asilo Santa Monica | Realizzato da Salvatore Bonavita</p>
+    <p class="text-sm opacity-80">&copy; 2025 Scuola Dell'Infanzia Santa Monica | Realizzato da Salvatore Bonavita</p>
     <div class="flex justify-center gap-8 text-2xl mt-4 opacity-80">
       <a href="https://www.instagram.com/tuoprofilo" target="_blank"><i class="fab fa-instagram"></i></a>
       <a href="https://www.facebook.com/tuapagina" target="_blank"><i class="fab fa-facebook"></i></a>
@@ -367,8 +367,9 @@
     },
     particles: {
       number: {
-        value: 100,
-        density: { enable: true, area: 800 },
+        value: isDarkMode ? 70 : 250,
+        
+        density: { enable: true, area: 1000 },
       },
       color: {
         value: isDarkMode ? "#ffffff" : "#888888",
@@ -378,7 +379,7 @@
         random: true,
         anim: {
           enable: true,
-          speed: 1.5,
+          speed: 3,
           opacity_min: 0.3,
           sync: false,
         },
@@ -388,7 +389,7 @@
         random: true,
         anim: {
           enable: true,
-          speed: 2,
+          speed: 1.5,
           size_min: 0.5,
           sync: false,
         },
@@ -406,7 +407,7 @@
       },
       links: {
         enable: !isDarkMode,
-        distance: 130,
+        distance: 120,
         color: "#aaa",
         opacity: 0.4,
         width: 1,
@@ -414,7 +415,7 @@
       shadow: {
         enable: isDarkMode,
         color: "#ffffff",
-        blur: 8,
+        blur: 5,
       },
     },
     detectRetina: true,
