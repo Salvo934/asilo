@@ -1,705 +1,168 @@
 <!DOCTYPE html>
 <html lang="it">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Asilo Santa Monica</title>
-
-    <!-- Fonts & Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
-
-    <style>
-      :root {
-        --accent: #ff8ba7;
-        --accent-dark: #f67280;
-        --text: #333;
-        --text-dark: #eaeaea;
-        --font: "Baloo 2", cursive;
-      }
-
-      body {
-        font-family: var(--font);
-        color: var(--text);
-        background: #fff;
-        margin: 0;
-        overflow-x: hidden;
-        transition: background 0.5s, color 0.5s;
-      }
-
-      #tsparticles {
-        position: fixed;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        width: 100%;
-        height: 100%;
-      }
-
-      body.dark-mode {
-        background-color: #1e1e1e;
-        color: var(--text-dark);
-      }
-
-      header,
-      section,
-      footer,
-      nav .nav-list {
-        background-color: rgba(255, 255, 255, 0.6);
-        backdrop-filter: blur(12px);
-        border-radius: 20px;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        transition: all 0.3s ease-in-out;
-      }
-
-      body.dark-mode header,
-      body.dark-mode section,
-      body.dark-mode footer,
-      body.dark-mode nav .nav-list {
-        background-color: rgba(30, 30, 30, 0.4);
-        box-shadow: 0 8px 32px rgba(255, 255, 255, 0.05);
-      }
-
-/* Header */
-/* Header fisso */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 1000;
-  padding: 0.5rem 2rem; /* ⬅️ più sottile in altezza */
-  background-color: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-}
-
-
-/* Glow fisso sotto header */
-.header-glow-fixed {
-  position: fixed;
-  top: 70px; /* appena sotto l'altezza del header */
-  left: 0;
-  width: 100%;
-  height: 120px;
-  z-index: 999; /* sotto l'header, sopra il contenuto */
-  pointer-events: none;
-
-  background: radial-gradient(
-    ellipse at center,
-    rgba(0, 255, 128, 0.5),
-    rgba(0, 212, 255, 0.3),
-    rgba(142, 125, 255, 0.2),
-    transparent 80%
-  );
-  background-size: 400% 400%;
-  filter: blur(80px);
-  opacity: 0.8;
-}
-
-@keyframes glowWave {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 60%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.header-glow-fixed {
-  animation: glowWave 10s ease-in-out infinite;
-}
-
-@media (max-width: 600px) {
-  header {
-    padding: 0.25rem 1rem;     /* meno padding */
-  }
-
-  .header-glow-fixed {
-    top: 40px;                 /* abbassato per header più basso */
-    height: 100px;             /* meno invasivo su mobile */
-    filter: blur(60px);        /* meno blur per performance */
-    opacity: 0.7;              /* leggermente meno visibile */
-  }
-}
-
-
-
-      .header-container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 0 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .logo-title {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-        color: inherit;
-      }
-
-      .logo {
-        width: 100px;
-        margin-right: 10px;
-      }
-
-      .menu-toggle {
-        display: none;
-        font-size: 1.8rem;
-        cursor: pointer;
-      }
-
-      nav .nav-list {
-        display: flex;
-        list-style: none;
-        gap: 20px;
-        padding: 0.5rem 1rem;
-      }
-
-      nav .nav-list a {
-        text-decoration: none;
-        font-weight: bold;
-        color: inherit;
-        position: relative;
-      }
-
-      nav .nav-list a::after {
-        content: "";
-        position: absolute;
-        left: 50%;
-        bottom: -5px;
-        transform: translateX(-50%) scaleX(0);
-        width: 100%;
-        height: 3px;
-        background: linear-gradient(90deg, #ff8ba7, #fcd5ce, #b5ead7);
-        border-radius: 2px;
-        transition: transform 0.4s ease;
-      }
-
-      nav .nav-list a:hover::after,
-      nav .nav-list a.active::after {
-        transform: translateX(-50%) scaleX(1);
-      }
-
-      @media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
-  nav .nav-list {
-    flex-direction: column;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background: rgba(255, 255, 255, 0.8); /* trasparenza simile al desktop */
-    backdrop-filter: blur(12px); /* effetto sfocatura */
-    -webkit-backdrop-filter: blur(12px); /* per Safari iOS e compatibilità */
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); /* più soft come su desktop */
-    padding: 1rem;
-    border-radius: 20px; /* match desktop radius */
-    width: 200px;
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease, opacity 0.5s ease;
-  }
-
-  nav .nav-list.active {
-    max-height: 500px;
-    opacity: 1;
-  }
-
-  body.dark-mode nav .nav-list {
-    background-color: rgba(30, 30, 30, 0.4); /* dark version */
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px rgba(255, 255, 255, 0.05);
-  }
-}
-
-      main {
-        max-width: 1100px;
-        margin: auto;
-        padding: 2rem;
-      }
-
-      section {
-        padding: 2rem;
-        margin-bottom: 2rem;
-      }
-
-      .hero {
-        background: linear-gradient(to right, #fcd5ce, #ffdee9);
-        color: #444;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-        padding: 3rem 2rem;
-      }
-
-      body.dark-mode .hero {
-        background: linear-gradient(to right, #3a3a3a, #2a2a2a);
-        color: var(--text-dark);
-      }
-
-      .gallery {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 1rem;
-      }
-
-      .gallery img {
-        width: 150px;
-        height: 150px;  
-        border-radius: 5px;
-        object-fit: cover;
-      }
-   
-
-
-
-      form {
-        display: flex;
-        flex-direction: column;
-        gap: 1rem;
-      }
-
-      form input,
-      form textarea {
-        padding: 0.75rem;
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        background: rgba(255, 255, 255, 0.8);
-      }
-
-      body.dark-mode form input,
-      body.dark-mode form textarea {
-        background: rgba(60, 60, 60, 0.6);
-        color: var(--text-dark);
-      }
-
-      form button {
-        padding: 0.75rem;
-        border: none;
-        border-radius: 10px;
-        background: var(--accent);
-        color: white;
-        font-weight: bold;
-        cursor: pointer;
-      }
-
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 1rem;
-      }
-
-      th, td {
-        padding: 0.75rem 1rem;
-        text-align: left;
-        border-bottom: 1px solid #ddd;
-      }
-
-      thead {
-        background: rgba(255, 139, 167, 0.2);
-      }
-
-      tbody tr:hover {
-        background-color: rgba(255, 139, 167, 0.1);
-      }
-
-      footer {
-        text-align: center;
-        font-size: 0.9rem;
-        padding: 1.5rem;
-      }
-
-      .social-icons a {
-        margin: 0 0.5rem;
-        color: inherit;
-        font-size: 1.5rem;
-      }
-
-      .theme-toggle-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 48px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.5);
-  border: none;
-  border-radius: 50%;
-  font-size: 1.4rem;
-  color: #333;
-  cursor: pointer;
-  z-index: 999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(6px);
-  transition: all 0.3s ease;
-}
-
-.theme-toggle-btn:hover {
-  background: var(--accent);
-  color: #fff;
-  transform: scale(1.1);
-  box-shadow: 0 0 16px rgba(255, 139, 167, 0.5);
-}
-
-body.dark-mode .theme-toggle-btn {
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--text-dark);
-}
-
-body.dark-mode .theme-toggle-btn:hover {
-  background: var(--accent-dark);
-  color: #fff;
-  box-shadow: 0 0 16px rgba(246, 114, 128, 0.5);
-}
-
-
-.hero {
-  padding: 3rem 2rem;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-  transition: background 0.4s ease;
-}
-
-body.dark-mode .hero {
-  background: rgba(40, 40, 40, 0.6);
-}
-
-.hero-content {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-.hero-text {
-  flex: 1 1 300px;
-}
-
-.hero-text h2 {
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
-  color: #444;
-}
-
-body.dark-mode .hero-text h2 {
-  color: var(--text-dark);
-}
-
-.hero-text p {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: #555;
-}
-
-body.dark-mode .hero-text p {
-  color: #ccc;
-}
-
-.hero-cta {
-  display: inline-block;
-  margin-top: 1.5rem;
-  padding: 0.75rem 1.5rem;
-  background-color: var(--accent);
-  color: white;
-  font-weight: bold;
-  border-radius: 12px;
-  text-decoration: none;
-  transition: background 0.3s ease, transform 0.3s ease;
-}
-
-.hero-cta:hover {
-  background-color: var(--accent-dark);
-  transform: translateY(-2px);
-}
-
-.hero-image {
-  flex: 1 1 250px;
-  display: flex;
-  justify-content: center;
-}
-
-.hero-image img {
-  max-width: 100%;
-  border-radius: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-}
-
-
-
-@media (max-width: 768px) {
-  header,
-  section,
-  footer,
-  nav .nav-list,
-  .hero {
-    background-color: rgba(28, 28, 28, 0.4) !important; /* <= più trasparente */
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-  }
-
-  body.dark-mode header,
-  body.dark-mode section,
-  body.dark-mode footer,
-  body.dark-mode nav .nav-list,
-  body.dark-mode .hero {
-    background-color: rgba(28, 28, 28, 0.4) !important; /* <= alpha corretto */
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-  }
-}
-
-html, body {
-  height: 100%;
-  overflow-x: hidden;
-}
-
-
-@media (max-width: 768px) {
-  .menu-toggle {
-    display: block;
-  }
-
-  nav .nav-list {
-    flex-direction: column;
-    position: fixed; /* da absolute → fixed */
-    top: 60px; /* subito sotto il header */
-    right: 1rem;
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    padding: 1rem;
-    border-radius: 20px;
-    width: 200px;
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    z-index: 1500; /* sopra header e glow */
-    transition: max-height 0.5s ease, opacity 0.5s ease;
-  }
-
-  nav .nav-list.active {
-    max-height: 500px;
-    opacity: 1;
-  }
-}
-
-
-
-
-  .fab-button {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.2);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    color: #1e1e1e;
-    border-radius: 50%;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 10000;
-    transition: background 0.3s ease;
-  }
-
-  .fab-button:hover {
-    background: rgba(255, 255, 255, 0.3);
-  }
-
-  #infoPopup {
-    position: fixed;
-    bottom: 80px;
-    left: 20px;
-    background: rgba(255, 255, 255, 0.15);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    color: #1e1e1e;
-    padding: 14px 18px;
-    border-radius: 12px;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
-    z-index: 9999;
-    display: none;
-    opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.4s ease, transform 0.4s ease;
-    max-width: 240px;
-    font-size: 0.85rem;
-    font-family: 'Inter', 'Segoe UI', sans-serif;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  .popup-visible {
-    display: block !important;
-    opacity: 1 !important;
-    transform: translateY(0) !important;
-  }
-
-  .popup-hidden {
-    display: block;
-    opacity: 0;
-    transform: translateY(20px);
-  }
-
-  .popup-icons {
-    margin-top: 10px;
-    display: flex;
-    gap: 12px;
-  }
-
-  .popup-icons a {
-    font-size: 25px;
-    color: #0e3910;
-    transition: color 0.3s ease;
-  }
-
-  .popup-icons a:hover {
-    color: #026220;
-  }
-
-  #closePopup {
-    margin-top: 10px;
-    background: none;
-    border: none;
-    color: #666;
-    font-size: 0.75rem;
-    cursor: pointer;
-  }
-
-
-
-  @media (max-width: 640px) {
-    #infoPopup {
-      left: 12px;
-      right: 12px;
-      bottom: 16px;
-      max-width: unset;
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asilo Santa Monica</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            baloo: ['"Baloo 2"', 'cursive'],
+          },
+          colors: {
+            accent: '#ff8ba7',
+            'accent-dark': '#f67280',
+            'glass-dark': 'rgba(30, 30, 30, 0.5)',
+            'glass-light': 'rgba(255, 255, 255, 0.4)',
+            text: '#333',
+            'text-dark': '#f5f5f5',
+            'bg-dark': '#050914',
+            'card-dark': '#1f2937',
+            'border-dark': '#374151',
+            'night-sky': '#020617'
+          },
+          borderRadius: {
+            xl: '1.5rem',
+            '2xl': '2rem',
+          },
+          animation: {
+            twinkle: 'twinkle 2s infinite ease-in-out'
+          },
+          keyframes: {
+            twinkle: {
+              '0%, 100%': { opacity: '0.2' },
+              '50%': { opacity: '1' }
+            }
+          }
+        },
+      },
+      darkMode: 'class',
+    };
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
+  <style>
+    body {
+      /*background-image: url('https://images.unsplash.com/photo-1532274402917-5aadf881bdf3?auto=format&fit=crop&w=1600&q=80');*/
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
-  }
-
-
-
-
-/*@media (max-width: 480px) {
-  #infoPopup {
-    right: 10px;
-    width: 90%;
-    font-size: 0.95rem;
-  }*/
-
-  .popup-icons {
-    font-size: 1.4rem;
-  }
-
-
-
-    </style>
-  </head>
-
-<!-- Bottone fluttuante -->
-<button id="helpToggleBtn" title="Serve aiuto?" class="fab-button">
-  <i class="fas fa-comment-dots"></i>
-</button>
-
-<!-- Popup info -->
-<div id="infoPopup" class="popup-hidden">
-  <p><strong>info</strong><br>Contattaci subito:</p>
-  <div class="popup-icons">
-    <a href="tel:+393293086089" title="Chiama"><i class="fas fa-phone"></i></a>
-    <a href="https://wa.me/393293086089" title="WhatsApp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+   /*body.dark {
+      background-image: url('https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&q=80');
+    }*/
+    .star {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff, #ffffff 30%, transparent);
+  width: 5px;
+  height: 5px;
+  animation: twinkle 1.5s infinite ease-in-out;
+  filter: drop-shadow(0 0 6px #ccc) brightness(1.5); /* Funziona bene anche su sfondo chiaro */
+}
+    
+    .shooting-star {
+      position: absolute;
+      width: 100px;
+      height: 2px;
+      background: linear-gradient(90deg, white, transparent);
+      animation: shoot 2s linear forwards;
+      opacity: 0.9;
+      filter: drop-shadow(0 0 8px white);
+    }
+    @keyframes shoot {
+      0% { transform: translate(0, 0) rotate(45deg); opacity: 1; }
+      100% { transform: translate(400px, 400px) rotate(45deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body class="transition-all duration-700 font-baloo text-text bg-white dark:bg-bg-dark dark:text-text-dark overflow-x-hidden">
+  <div class="fixed inset-0 bg-black/40 z-[-9] dark:block hidden"></div>
+  <div id="nightSky" class="fixed inset-0 -z-10 pointer-events-none">
+    <div id="tsparticles" class="fixed inset-0 -z-10"></div>
   </div>
-  <button id="closePopup">Chiudi</button>
-</div>
+  
+  </div>
 
   
- 
-  <body>
- 
-   
-    
-    <div id="tsparticles"></div>
+  <!-- Header -->
+  <header class="relative bg-transparent text-text dark:text-text-dark shadow-md backdrop-blur-sm py-6 px-8 sticky top-0 z-50 rounded-b-2xl">
+  
+    <!-- Linea Nuxt-style sotto l’header -->
+    <div class="absolute bottom-0 left-1/2 w-[60%] h-[1px] -translate-x-1/2 bg-gradient-to-r from-transparent via-accent to-transparent opacity-70"></div>
+  
+    <div class="flex justify-between items-center max-w-7xl mx-auto relative z-10">
+      <a href="#" class="flex items-center gap-4">
+        <img src="logo.png" alt="Logo" class="h-14" />
+        <h1 class="text-3xl font-bold">Asilo Santa Monica</h1>
+      </a>
+      <nav class="hidden md:flex gap-6 items-center">
+        <a href="#chi-siamo" class="hover:text-accent font-semibold">Chi Siamo</a>
+        <a href="#servizi" class="hover:text-accent font-semibold">Servizi</a>
+        <a href="#galleria" class="hover:text-accent font-semibold">Galleria</a>
+        <a href="#contatti" class="hover:text-accent font-semibold">Contatti</a>
+        <a href="iscrizione.html" class="bg-accent text-white px-5 py-2 rounded-full font-semibold hover:bg-accent-dark transition-all hover:scale-105">Iscriviti</a>
+      </nav>
+      <button id="menuToggle" class="md:hidden text-2xl">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+  
+  
+  <!-- Overlay e Menu Mobile -->
+<div id="mobileOverlay" class="fixed inset-0 bg-black/40 z-40 backdrop-blur-sm hidden"></div>
 
-    <header>
-      <div class="header-container">
-        <a href="#" class="logo-title">
-          <img src="logo.png" alt="Logo" class="logo" />
-          <h1>Asilo Santa Monica</h1>
-        </a>
-        
-        <!-- Menu hamburger -->
-        <div class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></div>
-    
-        <!-- Navigazione -->
-        <nav>
-          <ul class="nav-list" id="navList">
-            <li><a href="#chi-siamo">Chi Siamo</a></li>
-            <li><a href="#servizi">Servizi</a></li>
-            <li><a href="#galleria">Galleria</a></li>
-            <li><a href="#contatti">Contatti</a></li>
-            <li><a href="iscrizione.html">Iscriviti ora</a></li>
-          </ul>
-          <!-- Pulsante tema nel nav -->
-         
-        </nav>
-        <div class="header-glow-line"></div>
-        <div class="header-glow-under"></div>
+<div id="mobileMenu" class="md:hidden fixed top-0 right-0 w-4/5 max-w-sm h-full bg-white dark:bg-bg-dark text-text dark:text-text-dark z-50 p-6 transform translate-x-full transition-transform duration-300 shadow-2xl rounded-l-2xl">
+  <button id="closeMenu" class="text-2xl absolute top-4 right-4 text-text dark:text-text-dark">
+    <i class="fas fa-times"></i>
+  </button>
+  <nav class="flex flex-col gap-6 mt-16 text-lg font-semibold">
+    <a href="#chi-siamo" class="hover:text-accent">Chi Siamo</a>
+    <a href="#servizi" class="hover:text-accent">Servizi</a>
+    <a href="#galleria" class="hover:text-accent">Galleria</a>
+    <a href="#contatti" class="hover:text-accent">Contatti</a>
+    <a href="iscrizione.html" class="bg-accent text-white px-5 py-2 rounded-full text-center hover:bg-accent-dark">Iscriviti</a>
+  </nav>
+</div>
+
+
+  <!-- Linea decorativa sotto l’header -->
+<div class="relative z-40">
+  <!-- Linea sottile luminosa -->
+  <div class="pointer-events-none absolute inset-x-0 top-full h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent opacity-95 blur-sm"></div>
+
+  <!-- Glow radiale ampio -->
+  <div class="pointer-events-none absolute inset-x-0 top-full h-[140px] bg-[radial-gradient(ellipse_at_top,rgba(255,139,167,0.5),transparent_80%)] blur-[100px] opacity-90 animate-pulse"></div>
+
+  <!-- Glow aggiuntivo sfumato -->
+  <div class="pointer-events-none absolute inset-x-0 top-full h-[100px] bg-[radial-gradient(ellipse_at_top,rgba(255,139,167,0.3),transparent_70%)] blur-2xl"></div>
+</div>
+
+
+  <!-- Main -->
+  <main class="max-w-7xl mx-auto px-4 py-16 space-y-40 text-text dark:text-text-dark">
+    <!-- Hero Section -->
+    <section class="grid md:grid-cols-2 gap-12 items-center">
+      <div>
+        <h2 class="text-4xl font-bold mb-6 leading-tight">Dove crescere è un’avventura</h2>
+        <p class="mb-6 text-lg">Scopri un mondo di giochi, sorrisi e apprendimento: il nostro asilo è pensato per far sbocciare ogni piccolo talento in un ambiente sereno, creativo e stimolante.</p>
+        <a href="#contatti" class="bg-accent text-white px-6 py-3 rounded-full font-semibold shadow-lg hover:bg-accent-dark transition hover:scale-105">Contattaci</a>
       </div>
-      <div class="aurora"></div>
-    </header>
-    <div class="header-glow-fixed"></div>
+      <div>
+        <img src="img hero .jpeg" alt="Bambini che giocano" class="rounded-2xl shadow-xl w-full object-cover hover:scale-105 transition-transform duration-700" />
+      </div>
+    </section>
 
-    <div style="height: 80px;"></div>
-    
-    <!-- Pulsante tema fisso in basso -->
-    <button id="themeToggleFloat" title="Cambia tema" class="theme-toggle-btn">
-      <i class="fas fa-moon"></i>
-    </button>
-    
-    <div class="aurora"></div>
-
-    <main>
-      <section class="hero">
-        <div class="hero-content">
-          <div class="hero-text">
-            <h2>Dove crescere è un’avventura</h2>
-            <p>
-              Scopri un mondo di giochi, sorrisi e apprendimento: il nostro asilo è pensato
-              per far sbocciare ogni piccolo talento in un ambiente sereno, creativo e stimolante.
-            </p>
-            <a href="#contatti" class="hero-cta">Contattaci</a>
-          </div>
-          <div class="hero-image">
-            <img src="img hero .jpeg" alt="Bambini che giocano" />
-          </div>
-        </div>
-      </section>
-      
-
-      <section id="chi-siamo">
-        <h2>Chi Siamo</h2>
-        <p>
-          L’Asilo Santa Monica è uno spazio educativo pensato per accompagnare i
+    <!-- Qui continuano tutte le sezioni come precedentemente scritte -->
+    <!-- Chi Siamo, Servizi, Orari, Galleria, Contatti, Footer -->
+    <section id="chi-siamo">
+        <h2 class="text-2xl font-bold mb-4">Chi Siamo</h2>
+        <p class="text-lg leading-relaxed"> L’Asilo Santa Monica è uno spazio educativo pensato per accompagnare i
           bambini nei primi passi della loro crescita, favorendone lo sviluppo
           armonico in un ambiente sereno e stimolante. Da anni accogliamo con
           gioia i più piccoli, offrendo loro un luogo sicuro, ricco di affetto,
@@ -716,13 +179,12 @@ html, body {
           un’esperienza educativa ricca, coinvolgente e costruita su misura per
           le sue esigenze. All’Asilo Santa Monica ogni bambino è accolto,
           ascoltato e accompagnato con cura... per crescere insieme, passo dopo
-          passo.
-        </p>
+          passo.</em></p>
       </section>
 
       <section id="servizi">
-        <h2>I Nostri Servizi</h2>
-        <ul>
+        <h2 class="text-2xl font-bold mb-4">I Nostri Servizi</h2>
+        <ul class="list-disc list-inside space-y-2 text-lg">
           <li>Attività educative personalizzate</li>
           <li>Laboratori creativi, musicali e linguistici</li>
           <li>Spazi verdi e area gioco attrezzata</li>
@@ -730,191 +192,265 @@ html, body {
         </ul>
       </section>
 
-      <section id="galleria">
-        <h2>Galleria Fotografica</h2>
-        <div class="gallery">
-          <img src="laboratorio.jpeg" alt="Laboratorio" />
-          <img src="sport.jpeg" alt="Gioco" />
-          <img src="party.jpeg" alt="Festa" />
-          <img src="compiti.jpeg" alt="Scuola" />
-          <img src="disegni.jpeg" alt="Scuola" />
-          <img src="zaino.jpeg" alt="Gioco" />
-        </div>
-        </div>
-      </section>
-
+     
+      <!-- Orari Nido + Materna e Contatti lasciati identici, con miglioramenti di classe opzionali -->
       <section>
-        <h2>Orari di Apertura</h2>
-        <table>
-          <thead><tr><th>Giorno</th><th>Orario</th></tr></thead>
-          <tbody>
-            <tr><td>Lunedì - Venerdì</td><td>08:00 – 14:00</td></tr>
-            <tr><td>Sabato</td><td>08:00 – 12:00</td></tr>
-            <tr><td>Domenica</td><td>Chiuso</td></tr>
+        <h2 class="text-2xl font-bold mb-4">Orari Nido</h2>
+        <table class="w-full table-auto border-collapse border border-gray-300 dark:border-gray-600">
+          <thead>
+            <tr class="bg-accent text-white">
+              <th class="p-2">Giorno</th>
+              <th class="p-2">Orario</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr><td class="p-2">Lunedì - Venerdì</td><td>08:00 – 13:00</td></tr>
+            <tr class="bg-gray-50 dark:bg-[#2e2e2e]"><td class="p-2">Sabato</td><td>08:00 – 12:00</td></tr>
+            <tr><td class="p-2">Domenica</td><td>Chiuso</td></tr>
           </tbody>
         </table>
       </section>
 
+      <section>
+        <h2 class="text-2xl font-bold mb-4">Orari Materna</h2>
+        <table class="w-full table-auto border-collapse border border-gray-300 dark:border-gray-600">
+          <thead>
+            <tr class="bg-accent text-white">
+              <th class="p-2">Giorno</th>
+              <th class="p-2">Orario</th>
+            </tr>
+          </thead>
+          <tbody class="text-center">
+            <tr><td class="p-2">Lunedì - Venerdì</td><td>08:00 – 15:00</td></tr>
+            <tr class="bg-gray-50 dark:bg-[#2e2e2e]"><td class="p-2">Sabato</td><td>08:00 – 12:00</td></tr>
+            <tr><td class="p-2">Domenica</td><td>Chiuso</td></tr>
+          </tbody>
+        </table>
+      </section>
+    
+
+      <section id="galleria">
+        <h2 class="text-3xl font-bold mb-6 text-center">Galleria Fotografica</h2>
+        <p class="text-center text-lg mb-8 max-w-2xl mx-auto">Uno sguardo alla nostra giornata: creatività, gioco e apprendimento si fondono in ogni momento vissuto insieme.</p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          <div class="relative group overflow-hidden rounded-xl shadow-lg">
+            <img src="laboratorio.jpeg" alt="Laboratorio" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-black/40 text-white flex items-center justify-center text-lg opacity-0 group-hover:opacity-100 transition-opacity">Laboratorio</div>
+          </div>
+          <div class="relative group overflow-hidden rounded-xl shadow-lg">
+            <img src="sport.jpeg" alt="Sport" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-black/40 text-white flex items-center justify-center text-lg opacity-0 group-hover:opacity-100 transition-opacity">Attività Sportive</div>
+          </div>
+          <div class="relative group overflow-hidden rounded-xl shadow-lg">
+            <img src="party.jpeg" alt="Festa" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-black/40 text-white flex items-center justify-center text-lg opacity-0 group-hover:opacity-100 transition-opacity">Feste e Ricorrenze</div>
+          </div>
+          <div class="relative group overflow-hidden rounded-xl shadow-lg">
+            <img src="compiti.jpeg" alt="Compiti" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-black/40 text-white flex items-center justify-center text-lg opacity-0 group-hover:opacity-100 transition-opacity">Studio e Compiti</div>
+          </div>
+          <div class="relative group overflow-hidden rounded-xl shadow-lg">
+            <img src="disegni.jpeg" alt="Disegni" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-black/40 text-white flex items-center justify-center text-lg opacity-0 group-hover:opacity-100 transition-opacity">Arte e Creatività</div>
+          </div>
+          <div class="relative group overflow-hidden rounded-xl shadow-lg">
+            <img src="zaino.jpeg" alt="Zaino" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+            <div class="absolute inset-0 bg-black/40 text-white flex items-center justify-center text-lg opacity-0 group-hover:opacity-100 transition-opacity">Preparativi</div>
+          </div>
+        </div>
+      </section>
+
       <section id="contatti">
-        <h2>Contattaci</h2>
-        <form>
-          <input type="text" placeholder="Il tuo nome" required />
-          <input type="email" placeholder="La tua email" required />
-          <textarea rows="4" placeholder="Il tuo messaggio" required></textarea>
-          <button type="submit">Invia messaggio</button>
+        <h2 class="text-3xl font-bold mb-6 text-center">Contattaci</h2>
+        <p class="text-center text-lg mb-6">Hai domande o vuoi visitare il nostro asilo? Scrivici, siamo felici di rispondere!</p>
+        <form class="grid gap-4 max-w-xl mx-auto bg-white/60 dark:bg-glass-dark p-6 rounded-2xl shadow-xl backdrop-blur-md">
+          <input type="text" placeholder="Il tuo nome" required class="border border-gray-300 rounded-xl px-4 py-2 dark:bg-[#2e2e2e] dark:border-gray-600 focus:outline-accent" />
+          <input type="email" placeholder="La tua email" required class="border border-gray-300 rounded-xl px-4 py-2 dark:bg-[#2e2e2e] dark:border-gray-600 focus:outline-accent" />
+          <textarea rows="4" placeholder="Il tuo messaggio" required class="border border-gray-300 rounded-xl px-4 py-2 dark:bg-[#2e2e2e] dark:border-gray-600 focus:outline-accent"></textarea>
+          <button type="submit" class="bg-accent text-white px-6 py-2 rounded-full font-semibold hover:bg-accent-dark transition hover:scale-105">Invia messaggio</button>
         </form>
       </section>
-    </main>
 
-    
+      
+  </main>
 
-    <footer>
-      <p>&copy; 2025 Asilo Santa Monica | Tutti i diritti riservati | Realizzato da Salvatore Bonavita</p>
-      <nav class="social-icons">
-        <a href="https://www.instagram.com/tuoprofilo" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.facebook.com/tuapagina" target="_blank"><i class="fab fa-facebook"></i></a>
-        <a href="https://wa.me/393293086089" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      </nav>
-    </footer>
+  <!-- Contatto Pop-up -->
+<div id="contactPopup" class="fixed bottom-20 left-5 bg-white dark:bg-glass-dark text-text dark:text-text-dark rounded-2xl shadow-xl p-4 w-64 transition-opacity duration-500 opacity-0 pointer-events-none z-50">
+  <h3 class="text-lg font-semibold mb-2">Serve aiuto?</h3>
+  <p class="text-sm mb-3">Scrivici su WhatsApp o inviaci una mail!</p>
+  <a href="https://wa.me/393293086089" target="_blank" class="block bg-accent text-white text-center py-2 rounded-full hover:bg-accent-dark transition mb-2">
+    <i class="fab fa-whatsapp mr-2"></i>WhatsApp
+  </a>
+  <a href="#contatti" class="block text-center text-sm underline hover:text-accent">Modulo Contatti</a>
+</div>
 
-   
+<!-- Floating Button -->
+<button id="contactBtn" class="fixed bottom-5 left-5 bg-accent text-white w-12 h-12 rounded-full flex items-center justify-center text-xl shadow-lg z-50 hover:bg-accent-dark transition hover:scale-110" title="Contattaci">
+  <i class="fas fa-comment-dots"></i>
+</button>
 
 
+  <!-- Footer -->
+  <footer class="relative bg-transparent text-text dark:text-text-dark text-center py-8 mt-16 backdrop-blur-sm">
+    <!-- Linea decorativa sopra -->
+    <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent opacity-80"></div>
+  
+    <p class="text-sm opacity-80">&copy; 2025 Asilo Santa Monica | Realizzato da Salvatore Bonavita</p>
+    <div class="flex justify-center gap-8 text-2xl mt-4 opacity-80">
+      <a href="https://www.instagram.com/tuoprofilo" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.facebook.com/tuapagina" target="_blank"><i class="fab fa-facebook"></i></a>
+      <a href="https://wa.me/393293086089" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+  </footer>
+  
+  
 
-    <script>
-      // Gestione menu mobile
-      const menuToggle = document.getElementById("menuToggle");
-      const navList = document.getElementById("navList");
-    
-      menuToggle.addEventListener("click", () => {
-        navList.classList.toggle("active");
-        const icon = menuToggle.querySelector("i");
-        icon.classList.toggle("fa-bars");
-        icon.classList.toggle("fa-times");
-      });
-    
-      // Imposta il tema all'avvio PRIMA di caricare elementi dipendenti
-      const body = document.body;
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "dark") {
-        body.classList.add("dark-mode");
-      }
-    
-      // Particelle (con colore in base al tema)
-      function loadParticlesBasedOnTheme() {
-        const isDarkMode = document.body.classList.contains("dark-mode");
-    
-        tsParticles.load("tsparticles", {
-          fullScreen: { enable: true, zIndex: -1 },
-          particles: {
-            number: { value: 60, density: { enable: true, area: 800 } },
-            color: {
-              value: { h: 180, s: 100, l: 50 },
-              animation: { enable: true, speed: 5, sync: false }
-            },
-            shape: { type: "circle" },
-            opacity: { value: 0.3 },
-            size: { value: 4 },
-            move: { enable: true, speed: 0.3, direction: "none", outModes: "out" },
-            links: {
-              enable: true,
-              distance: 100,
-              color: isDarkMode ? "#bbbbbb" : "#666666",
-              opacity: 0.3,
-              width: 1
-            }
+  <!-- Floating Theme Button -->
+  <button id="themeToggleFloat" title="Cambia tema" class="fixed bottom-5 right-5 w-12 h-12 bg-white/50 dark:bg-white/10 rounded-full flex items-center justify-center text-xl text-text dark:text-text-dark shadow-lg backdrop-blur-md transition hover:scale-110 hover:bg-accent hover:text-white">
+    <i class="fas fa-moon transition-transform duration-500"></i>
+  </button>
+
+  <!-- Scripts -->
+  <script>
+    const body = document.body;
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") body.classList.add("dark");
+
+    function loadParticlesBasedOnTheme() {
+      const isDarkMode = body.classList.contains("dark");
+      tsParticles.load("tsparticles", {
+        fullScreen: { enable: true, zIndex: -1 },
+        particles: {
+          number: { value: 80, density: { enable: true, area: 800 } },
+          color: { value: isDarkMode ? "#88c0d0" : "#666666" },
+          shape: { type: "circle" },
+          opacity: { value: 0.3 },
+          size: { value: isDarkMode ? { min: 1, max: 2 } : 4 },
+          move: { enable: true, speed: 0.2 },
+          links: {
+            enable: !isDarkMode,
+            distance: 100,
+            color: isDarkMode ? "#88c0d0" : "#666666",
+            opacity: 0.2,
+            width: 1,
           },
-          interactivity: {
-            events: {
-              onHover: { enable: false },
-              onClick: { enable: false },
-              resize: true
-            }
-          },
-          detectRetina: true
-        });
-      }
-    
-      // Inizializza particelle
-      loadParticlesBasedOnTheme();
-    
-      // Funzione per gestire il toggle tema
-      function setupThemeToggle(btnId) {
-        const btn = document.getElementById(btnId);
-        if (!btn) return;
-    
-        const icon = btn.querySelector("i");
-    
-        // Imposta icona in base al tema iniziale
-        const isDark = body.classList.contains("dark-mode");
-        icon.classList.remove(isDark ? "fa-moon" : "fa-sun");
-        icon.classList.add(isDark ? "fa-sun" : "fa-moon");
-    
-        btn.addEventListener("click", () => {
-          body.classList.toggle("dark-mode");
-          const dark = body.classList.contains("dark-mode");
-    
-          // Cambia icona
-          icon.classList.toggle("fa-moon", !dark);
-          icon.classList.toggle("fa-sun", dark);
-    
-          // Salva preferenza
-          localStorage.setItem("theme", dark ? "dark" : "light");
-    
-          // Ricarica particelle con nuovo colore
-          setTimeout(loadParticlesBasedOnTheme, 300);
-        });
-      }
-    
-      // Attiva i due bottoni tema
-      setupThemeToggle("themeToggleNav");
-      setupThemeToggle("themeToggleFloat");
-    </script>
-    
-    <script>
-      window.addEventListener('DOMContentLoaded', () => {
-        const header = document.querySelector('header');
-        const main = document.querySelector('main');
-        if (header && main) {
-          const headerHeight = header.offsetHeight;
-          main.style.paddingTop = headerHeight + 40 + 'px'; // 40px extra per il glow
-        }
+        },
+        background: {
+          color: isDarkMode ? "#050914" : "#ffffff",
+        },
       });
-    </script>
+    }
 
+    function setupNightSkyStars() {
+  const container = document.getElementById('nightSky');
+  if (!container) return;
 
+  container.innerHTML = ''; // Rimuove le stelle esistenti (opzionale ma consigliato)
 
-    <script> 
+  for (let i = 0; i < 100; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.top = `${Math.random() * 100}%`;
+    star.style.left = `${Math.random() * 100}%`;
+    star.style.opacity = Math.random();
+    star.style.animationDelay = `${Math.random() * 5}s`;
+    container.appendChild(star);
+  }
+}
 
+    function setupThemeToggle(btnId) {
+      const btn = document.getElementById(btnId);
+      const icon = btn.querySelector("i");
+      const isDark = body.classList.contains("dark");
+      icon.classList.remove("fa-moon", "fa-sun");
+      icon.classList.add(isDark ? "fa-sun" : "fa-moon");
 
+      btn.addEventListener("click", () => {
+        body.classList.toggle("dark");
+        const dark = body.classList.contains("dark");
+        icon.classList.toggle("fa-moon", !dark);
+        icon.classList.toggle("fa-sun", dark);
+        icon.classList.toggle("rotate-180", dark);
+        localStorage.setItem("theme", dark ? "dark" : "light");
+        setTimeout(() => {
+          tsParticles.domItem(0)?.destroy();
+          loadParticlesBasedOnTheme();
+          if (dark) setupNightSkyStars();
+        }, 300);
+      });
+    }
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const popup = document.getElementById("infoPopup");
-    const closeBtn = document.getElementById("closePopup");
-    const toggleBtn = document.getElementById("helpToggleBtn");
+    loadParticlesBasedOnTheme();
+    setupNightSkyStars();
+    setupThemeToggle("themeToggleFloat");
 
-    toggleBtn.addEventListener("click", () => {
-      const isVisible = popup.classList.contains("popup-visible");
-      popup.classList.toggle("popup-visible", !isVisible);
-      popup.classList.toggle("popup-hidden", isVisible);
-    });
+    function spawnShootingStar() {
+      const container = document.getElementById('nightSky');
+      const star = document.createElement('div');
+      star.className = 'shooting-star';
+      star.style.top = Math.random() * window.innerHeight * 0.5 + 'px';
+      star.style.left = Math.random() * window.innerWidth * 0.5 + 'px';
+      container.appendChild(star);
+      setTimeout(() => container.removeChild(star), 2000);
+    }
+    setInterval(() => {
+      if (document.body.classList.contains('dark')) {
+        spawnShootingStar();
+      }
+    }, 5000);
+  </script>
 
-    closeBtn.addEventListener("click", () => {
-      popup.classList.remove("popup-visible");
-      popup.classList.add("popup-hidden");
-    });
+<script>
+  const contactBtn = document.getElementById('contactBtn');
+  const contactPopup = document.getElementById('contactPopup');
+  let isPopupVisible = false;
+
+  contactBtn.addEventListener('click', () => {
+    isPopupVisible = !isPopupVisible;
+    contactPopup.classList.toggle('opacity-0', !isPopupVisible);
+    contactPopup.classList.toggle('pointer-events-none', !isPopupVisible);
   });
 
+  // Optional: Hide popup if clicked outside
+  document.addEventListener('click', (e) => {
+    if (isPopupVisible && !contactPopup.contains(e.target) && e.target !== contactBtn && !contactBtn.contains(e.target)) {
+      contactPopup.classList.add('opacity-0', 'pointer-events-none');
+      isPopupVisible = false;
+    }
+  });
+</script>
+
+<script>setTimeout(() => {
+  contactPopup.classList.remove('opacity-0', 'pointer-events-none');
+  isPopupVisible = true;
+}, 10000); // 10 secondi dopo il caricamento
+</script>
+
+<script>
+  const menuToggle = document.getElementById("menuToggle");
+  const mobileMenu = document.getElementById("mobileMenu");
+  const closeMenu = document.getElementById("closeMenu");
+  const mobileOverlay = document.getElementById("mobileOverlay");
+
+  function openMenu() {
+    mobileMenu.classList.remove("translate-x-full");
+    mobileOverlay.classList.remove("hidden");
+    document.body.classList.add("overflow-hidden");
+  }
+
+  function closeMenuFunc() {
+    mobileMenu.classList.add("translate-x-full");
+    mobileOverlay.classList.add("hidden");
+    document.body.classList.remove("overflow-hidden");
+  }
+
+  menuToggle.addEventListener("click", openMenu);
+  closeMenu.addEventListener("click", closeMenuFunc);
+  mobileOverlay.addEventListener("click", closeMenuFunc);
+</script>
 
 
 
-
-
-
-
-
-    </script>
-
-
-  </body>
+  
+</body>
 </html>
