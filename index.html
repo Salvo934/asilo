@@ -4,6 +4,20 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Asilo Santa Monica</title>
+  <script>
+    // Applica il tema PRIMA che venga disegnata la pagina
+    if (localStorage.getItem("theme") === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+  </script>
+  
+    <script>
+      // Applica il tema PRIMA che venga disegnata la pagina
+      if (localStorage.getItem("theme") === "light") {
+        document.documentElement.classList.add("light");
+      }
+    </script>
+  
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -40,6 +54,9 @@
         },
       },
       darkMode: 'class',
+      
+  
+
     };
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700&display=swap" rel="stylesheet" />
@@ -80,7 +97,7 @@
     }
   </style>
 </head>
-<body class="transition-all duration-700 font-baloo text-text bg-white dark:bg-bg-dark dark:text-text-dark overflow-x-hidden">
+<body class="bg-white text-neutral-800 dark:bg-bg-dark dark:text-neutral-100">
   <div class="fixed inset-0 bg-black/40 z-[-9] dark:block hidden"></div>
   <div id="nightSky" class="fixed inset-0 -z-10 pointer-events-none">
     <div id="tsparticles" class="fixed inset-0 -z-10"></div>
@@ -302,7 +319,8 @@
       <a href="https://wa.me/393293086089" target="_blank"><i class="fab fa-whatsapp"></i></a>
     </div>
   </footer>
-  
+
+
   
 
   <!-- Floating Theme Button -->
@@ -449,8 +467,8 @@
   mobileOverlay.addEventListener("click", closeMenuFunc);
 </script>
 
+ 
 
-
-  
+  </script>
 </body>
 </html>
